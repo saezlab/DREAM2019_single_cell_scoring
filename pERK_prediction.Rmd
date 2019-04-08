@@ -61,6 +61,40 @@ pERK_test_data = phospho_median %>%
 
 ## 1.1 From same experiments and same time
 
+```{r}
+library(ranger)
+
+# we start from pERK_training_data
+
+reporters <-  colnames(pERK_training_data)[6:39]
+
+# predictors = c("treatment","time", reporters[reporters!="p.ERK"])
+predictors = c(reporters[reporters!="p.ERK"])
+response = "p.ERK"
+
+
+
+rangerres0=ranger(as.formula(paste(response, " ~ ", paste(predictors, collapse= "+"))),
+				  data = pERK_training_data, 
+				  num.trees=100,
+				  verbose=T,
+				  num.threads = 3)
+
+pred.p.ERK <- predict(rangerres0, data = pERK_validation_data)
+
+
+pERK_validation_data %>% select(cell_line,treatment,time,time_course,p.ERK) %>%
+bind_cols(p.ERK.pred = pred.p.ERK$predictions) %>%
+	mutate(time = ifelse(is.na(time),0,as.numeric(as.character(time)))) %>%
+	ggplot() +
+	geom_point(aes(time,p.ERK,col="data")) + 
+	geom_point(aes(time,p.ERK.pred,col="pred"))  + 
+	geom_line(aes(time,p.ERK, col="data")) + 
+	geom_line(aes(time,p.ERK.pred,col="pred")) +
+	facet_grid(treatment~cell_line) + scale_color_manual(values = c("data" = "black", "pred" = "red"))
+
+
+```
 
 
 

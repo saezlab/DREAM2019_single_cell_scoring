@@ -1,7 +1,7 @@
 
 # Single Cell Signaling in Breast Cancer DREAM challenge
 
-This repository stores the scoring, validation and post-challenge analysis scripts used in the [Single Cell Signaling in Breast Cancer DREAM challenge](https://www.synapse.org/#!Synapse:syn20366914/wiki/593925 WIKI page).
+This repository stores the scoring, validation and post-challenge analysis scripts used in the [Single Cell Signaling in Breast Cancer DREAM challenge](https://www.synapse.org/#!Synapse:syn20366914/wiki/593925 "WIKI page").
 
 The scripts for the evaluation of the teams are in the `submission_analysis` folder, organised by subchallenges. 
 
